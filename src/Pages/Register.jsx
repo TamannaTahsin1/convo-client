@@ -85,7 +85,7 @@ const Register = () => {
                   />
                 </div>
                 <div className="form-control mt-6">
-                  <button className="btn bg-red-500 text-white" type="submit">Register</button>
+                  <button className="btn bg-red-500 text-white" type="submit">Create User</button>
                 </div>
                 <p className="p-4">
                   Do not have an account?
