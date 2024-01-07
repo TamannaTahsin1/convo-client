@@ -1,10 +1,42 @@
 import { Link } from "react-router-dom";
-const handleLogin = e =>{
-    e.preventDefault();
-    
-}
+import SocialLogin from "./SocialLogin";
+import useAuth from "../Hooks/useAuth";
+import toast from "react-hot-toast";
 
 const Login = () => {
+    const {logIn} = useAuth();
+
+      // ! form control
+    const handleLogin = e =>{
+        e.preventDefault();
+        const name = e.target.name.value;
+        const email = e.target.email.value;
+        const password = e.target.password.value;
+        console.log(name, email, password);
+
+    //! password validation
+    if(password.length < 6){
+      toast.error("Password must be at least 6 characters")
+      return;
+    }
+      //! create new user
+      logIn(email, password)
+      .then(res => {
+        console.log(res.user);
+        toast.success('Successfully Logged in!',
+        {
+          icon: '👏',
+          style: {
+            borderRadius: '10px',
+            background: '#333',
+            color: '#fff',
+          },
+        })
+      }).catch(err => {
+        console.log(err);
+      });
+
+    }
     return (
         <div className='hero h-[85vh]'>
         <div className='hero-content flex-col lg:flex-row-reverse'>
@@ -16,24 +48,24 @@ const Login = () => {
             <form onSubmit={handleLogin}  className='card-body'>
               <div className='form-control'>
                 <label className='label'>
-                  <span className='label-text'>Email</span>
+                  <span className='label-text'>UserName</span>
                 </label>
                 <input
-                  name='email'
-                  type='email'
-                  placeholder='email'
+                  name='name'
+                  type='text'
+                  placeholder='name'
                   className='input input-bordered'
                   required
                 />
               </div>
               <div className='form-control'>
                 <label className='label'>
-                  <span className='label-text'>Profession</span>
+                  <span className='label-text'>Email</span>
                 </label>
                 <input
-                  name='profession'
-                  type='text'
-                  placeholder='profession'
+                  name='email'
+                  type='email'
+                  placeholder='abc@gmail.com'
                   className='input input-bordered'
                   required
                 />
@@ -59,7 +91,7 @@ const Login = () => {
                   Register
                 </Link>
               </p>
-           
+           <SocialLogin></SocialLogin>
             </form>
           </div>
           {/* <div className="w-72 lg:w-[500px]">

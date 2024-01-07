@@ -1,17 +1,14 @@
 import { FcGoogle } from "react-icons/fc";
+import useAuth from "../Hooks/useAuth";
 const SocialLogin = () => {
+    // !google provider
+    const {googleLogin} = useAuth()
+    // ! Button control
     const handleSocialLogin = (media) => {
-        media().then((result) => {
-          const userInfo = {
-            email:result.user?.email,
-            name: result.user?.displayName
-          }
-          axiosPublic.post('/users', userInfo)
-          .then(res =>{
-            console.log(res.data)
-            navigate(location?.state ? location.state : "/");
-          })
-        });
+        media()
+        .then(res =>{
+            console.log(res);
+        })
       };
     return (
         <div>

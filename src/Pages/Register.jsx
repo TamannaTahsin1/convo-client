@@ -1,10 +1,42 @@
 import { Link } from "react-router-dom";
+import useAuth from "../Hooks/useAuth";
+import toast from "react-hot-toast";
+
 
 
 const Register = () => {
+    const {createUser} = useAuth()
+
+    // ! form control
     const handleRegister = e =>{
         e.preventDefault();
-        
+        const name = e.target.name.value;
+        const email = e.target.email.value;
+        const password = e.target.password.value;
+        console.log(name, email, password);
+
+    //! password validation
+    if(password.length < 6){
+      toast.error("Password must be at least 6 characters")
+      return;
+    }
+      //! create new user
+      createUser(email, password)
+      .then(res => {
+        console.log(res.user);
+        toast.success('User Registration Successful!',
+        {
+          icon: '👏',
+          style: {
+            borderRadius: '10px',
+            background: '#333',
+            color: '#fff',
+          },
+        })
+      }).catch(err => {
+        console.log(err);
+      });
+
     }
     return (
         <div className="hero h-[85vh]">
@@ -42,29 +74,6 @@ const Register = () => {
                 </div>
                 <div className="form-control">
                   <label className="label">
-                    <span className="label-text">Photo</span>
-                  </label>
-                  <input
-                    name="photo"
-                    type="photo"
-                    className="input input-bordered"
-                    required
-                  />
-                </div>
-                <div className="form-control">
-                  <label className="label">
-                    <span className="label-text">Profession</span>
-                  </label>
-                  <input
-                    name="profession"
-                    type="text"
-                    placeholder="Profession"
-                    className="input input-bordered"
-                    required
-                  />
-                </div>
-                <div className="form-control">
-                  <label className="label">
                     <span className="label-text">Password</span>
                   </label>
                   <input
@@ -76,7 +85,7 @@ const Register = () => {
                   />
                 </div>
                 <div className="form-control mt-6">
-                  <button className="btn bg-red-500 text-white">Register</button>
+                  <button className="btn bg-red-500 text-white" type="submit">Register</button>
                 </div>
                 <p className="p-4">
                   Do not have an account?
